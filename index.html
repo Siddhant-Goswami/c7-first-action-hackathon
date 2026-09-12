@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Action Hackathon · C7 Capstone · 100xEngineers</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff;--bg2:#f9f9f9;--card:#f5f5f5;--peach:#ffeee9;
+  --ink:#1a1a1a;--ink2:#666666;--muted:#999999;
+  --coral:#f96846;--glow:rgba(249,104,70,.2);--border:#e5e5e5;
+  --ok:#22c55e;--warn:#f59e0b;--bad:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:17px}
+.mono{font-family:'JetBrains Mono',monospace}
+a{color:var(--coral)}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+
+/* nav */
+nav{position:sticky;top:0;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:50}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+.logo{font-weight:700;font-size:15px;white-space:nowrap}
+.logo span{color:var(--coral)}
+.links{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.links::-webkit-scrollbar{display:none}
+.links a{color:var(--ink2);text-decoration:none;white-space:nowrap;font-weight:500}
+.links a:hover{color:var(--coral)}
+
+/* hero */
+header{padding:56px 0 40px;border-bottom:1px solid var(--border)}
+.label{color:var(--coral);font-size:12px;letter-spacing:.3em;text-transform:uppercase;font-weight:700;font-family:'JetBrains Mono',monospace}
+h1{font-size:clamp(38px,7vw,64px);line-height:1.05;font-weight:700;margin:14px 0 18px;letter-spacing:-.01em}
+h1 em{color:var(--coral);font-style:normal}
+.sub{font-size:20px;color:var(--ink2);max-width:640px}
+.clockrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px}
+.clock{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px}
+.clock .k{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.clock .v{font-size:20px;font-weight:700;margin-top:4px;line-height:1.2}
+.clock .d{font-size:14px;color:var(--ink2);margin-top:4px}
+.clock.hot{background:var(--peach);border-color:var(--coral)}
+
+/* sections */
+section{padding:48px 0;border-bottom:1px solid var(--border)}
+h2{font-size:clamp(26px,4.5vw,34px);line-height:1.15;font-weight:700;margin:6px 0 20px}
+h2 .num{color:var(--coral);font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.2em;display:block;margin-bottom:8px;font-weight:500}
+h3{font-size:19px;font-weight:700;margin:26px 0 10px}
+p{margin:0 0 14px;color:var(--ink)}
+p.lead{font-size:19px}
+ul,ol{margin:0 0 16px 22px}
+li{margin-bottom:8px}
+strong{font-weight:700}
+
+.callout{border-left:4px solid var(--coral);background:var(--peach);padding:18px 20px;border-radius:0 10px 10px 0;margin:22px 0}
+.callout .t{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);font-weight:500;margin-bottom:6px}
+.callout p:last-child{margin:0}
+.rule{background:var(--ink);color:#fff;border-radius:12px;padding:26px 24px;margin:24px 0}
+.rule .t{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);margin-bottom:10px}
+.rule p{color:#fff;font-size:19px;margin:0 0 10px}
+.rule p:last-child{margin:0}
+.rule .ok{color:#86efac}
+.rule .no{color:#fca5a5}
+
+/* artefact list */
+.art{counter-reset:a;list-style:none;margin:0}
+.art li{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:16px 0;border-top:1px solid var(--border);margin:0}
+.art li:last-child{border-bottom:1px solid var(--border)}
+.art .n{width:36px;height:36px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;box-shadow:0 0 0 0 var(--glow);transition:box-shadow .2s}
+.art li:hover .n{box-shadow:0 0 0 6px var(--glow)}
+.art .h{font-weight:700;font-size:17px}
+.art .b{color:var(--ink2);font-size:15.5px;margin-top:3px}
+.art .b b{color:var(--ink)}
+.pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border);border-radius:999px;padding:2px 9px;margin-left:6px;color:var(--ink2);vertical-align:middle}
+.pill.p{border-color:var(--coral);color:var(--coral)}
+
+/* timeline */
+.tl{list-style:none;margin:0;border-left:2px solid var(--border);padding-left:22px}
+.tl li{position:relative;padding-bottom:22px;margin:0}
+.tl li::before{content:"";position:absolute;left:-29px;top:7px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--coral)}
+.tl .when{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--coral);letter-spacing:.05em}
+.tl .what{font-weight:700;font-size:17px}
+.tl .how{color:var(--ink2);font-size:15.5px;margin-top:2px}
+.states{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.state{border-radius:8px;padding:10px 12px;font-size:14px;flex:1 1 200px;border:1px solid var(--border);background:var(--card)}
+.state b{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+.state.g b{color:var(--ok)}.state.s b{color:var(--warn)}.state.x b{color:var(--bad)}
+
+/* brief cards */
+.cards{display:grid;grid-template-columns:1fr;gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06);border-color:var(--coral)}
+.card h4{font-size:18px;font-weight:700;margin-bottom:10px}
+.card .row{display:grid;grid-template-columns:96px 1fr;gap:10px;font-size:15px;padding:6px 0;border-top:1px dashed var(--border)}
+.card .row .k{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--coral);padding-top:3px}
+.card .row .v{color:var(--ink)}
+
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:15.5px;margin:12px 0 20px}
+th{text-align:left;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink2);padding:10px 8px;border-bottom:2px solid var(--ink)}
+td{padding:11px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+td:first-child{font-weight:700;white-space:nowrap}
+
+/* prizes */
+.prize{background:var(--peach);border:1px solid var(--coral);border-radius:12px;padding:22px}
+.prize h3{margin-top:0}
+.prize ul{margin-bottom:0}
+
+/* faq */
+details{border-top:1px solid var(--border);padding:14px 0}
+details:last-of-type{border-bottom:1px solid var(--border)}
+summary{cursor:pointer;font-weight:700;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--coral);font-weight:700;font-size:20px;line-height:1}
+details[open] summary::after{content:"×"}
+details p{margin:10px 0 0;color:var(--ink2)}
+details p b{color:var(--ink)}
+
+/* placeholders */
+.ph{background:#fff7ed;border:1px dashed var(--warn);color:#92400e;padding:2px 8px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:13px}
+.btn{display:inline-block;background:var(--coral);color:#fff;text-decoration:none;font-weight:700;padding:14px 24px;border-radius:8px;letter-spacing:.04em;margin-top:8px;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow)}
+footer{padding:36px 0 56px;color:var(--muted);font-size:13px}
+
+@media (max-width:640px){
+  .clockrow{grid-template-columns:1fr}
+  .card .row{grid-template-columns:1fr;gap:2px}
+  td:first-child{white-space:normal}
+  body{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <div class="logo"><span>100x</span>Engineers</div>
+  <div class="links">
+    <a href="#why">Why</a><a href="#rule">Rule</a><a href="#submit">Submit</a><a href="#clock">Clock</a><a href="#start">Start</a><a href="#briefs">By brief</a><a href="#judging">Judging</a><a href="#prizes">Prizes</a><a href="#faq">FAQ</a>
+  </div>
+</div></nav>
+
+<header><div class="wrap">
+  <div class="label">C7 · Capstone · 48 hours</div>
+  <h1>The First Action <em>Hackathon</em></h1>
+  <p class="sub">Before 7 October you will build a system. In the next 48 hours you will prove the process exists by running it yourself, by hand, on two real people.</p>
+  <div class="clockrow">
+    <div class="clock hot"><div class="k">Starts</div><div class="v">Sat 12 Sep, 10:00 PM</div><div class="d">Brief goes live. Clock starts.</div></div>
+    <div class="clock"><div class="k">Submission closes</div><div class="v">Mon 14 Sep, 10:00 PM</div><div class="d">Late folders are not read.</div></div>
+    <div class="clock"><div class="k">Results</div><div class="v">Tue 15 Sep</div><div class="d">Top 3 announced by evening.</div></div>
+  </div>
+</div></header>
+
+<section id="why"><div class="wrap">
+  <h2><span class="num">01</span>Why this exists</h2>
+  <p class="lead">We have watched many cohorts reach this exact week. Lectures end, the capstone begins, and most teams spend the first fortnight reading, planning and choosing tools. By the time they talk to a real person, it is too late to change anything.</p>
+  <p>The first action is always the same, and it is never technical: find the people your capstone is for, learn how they do the work today, and do that work for them once, by hand. If you cannot convert their input into a useful output yourself, you cannot automate it, and you should not build an agent for it.</p>
+  <p>This hackathon exists to make that first action happen this weekend instead of in October. Your capstone deadline is <strong>7 October</strong>. Offline Demo Day in Bengaluru is <strong>11 October</strong>. Everything you produce in these 48 hours is the foundation of what you present there.</p>
+  <div class="callout"><div class="t">How Siddhant did it with Sahaj Fresh</div>
+    <p>He told the client he would not sell them software. He read their data, formed a judgment by hand about what would help, and delivered that judgment to them directly. Only once the process was known did he add a thin deterministic layer to do his own part faster. Manual for them, automated for him, and the automation came second.</p>
+  </div>
+</div></section>
+
+<section id="rule"><div class="wrap">
+  <h2><span class="num">02</span>The one rule</h2>
+  <div class="rule"><div class="t">Manual for the user. Any tool for you.</div>
+    <p><span class="ok">You may</span> use any AI model, skill, script or tool to do your own work: research, interview prep, drafting, checking, note-taking.</p>
+    <p><span class="no">You may not</span> hand the user an app, an agent, a bot or a system. What reaches them is something you produced, by hand, from their real input.</p>
+  </div>
+  <p>The distinction matters because the thing you are proving this weekend is the <strong>process</strong>: the steps that turn this person's input into an output they find useful. Software built before the process is known is decoration. Software built after it is the capstone.</p>
+  <p>Only existing capstone teams take part. No new teams form for this hackathon. Your submission is one folder per team.</p>
+</div></section>
+
+<section id="submit"><div class="wrap">
+  <h2><span class="num">03</span>What you submit: one folder, ten artefacts</h2>
+  <p>Completion is binary. All ten present means complete. Nine present means not complete, and judging only begins for complete folders. Each artefact is a short document, a screenshot or a file inside your team's folder. Length is not credit.</p>
+  <ol class="art">
+    <li><div class="n">1</div><div><div class="h">Observation</div><div class="b">One paragraph. <b>Who</b> does the work, <b>what</b> they do, <b>where</b> it breaks. No solution words. You have written it properly when a stranger can retell it without your phrasing.</div></div></li>
+    <li><div class="n">2</div><div><div class="h">Impact metric</div><div class="b">One number with a unit, and how you would measure it before and after. <b>Passes:</b> "from 40 minutes per report to under 10". <b>Fails:</b> "saves time".</div></div></li>
+    <li><div class="n">3</div><div><div class="h">Hypothesis</div><div class="b">Your capstone hypothesis rewritten in your own words, with a number and one kill condition: the result that would tell you it is wrong.</div></div></li>
+    <li><div class="n">4</div><div><div class="h">Two named users</div><div class="b">Name, role, and how you reached them. Not you and not your own team members. A classmate, friend or family member counts if they genuinely match your brief’s user. If your brief needs a specific kind of person (a creator with 20 pieces, a learner, someone holding a costly belief), that is who they must be.</div></div></li>
+    <li><div class="n">5</div><div><div class="h">Contact artefact, one per user <span class="pill p">no notes without this</span></div><div class="b">A chat or email screenshot showing the conversation and a timestamp. Blur or crop anything sensitive. Notes without a contact artefact count as zero users.</div></div></li>
+    <li><div class="n">6</div><div><div class="h">Interview notes, one per user</div><div class="b">What they told you about how they do the work today, and the real input they gave you to work on.</div></div></li>
+    <li><div class="n">7</div><div><div class="h">The manual run</div><div class="b">The actual output you handed each user, produced from their real input, by you. Attach it as they received it.</div></div></li>
+    <li><div class="n">8</div><div><div class="h">User reaction, in their words</div><div class="b">One specific sentence from each user about what you gave them. "Nice" is not a reaction. "The second point is wrong, we stopped doing that in June" is.</div></div></li>
+    <li><div class="n">9</div><div><div class="h">Process map</div><div class="b">The steps you actually took from input to output, in order. Colour each step <b>D</b> (a rule, a lookup, arithmetic), <b>P</b> (a judgment call) or <b>H</b> (a human had to be in the room). This is your system design. It is what you build from.</div></div></li>
+    <li><div class="n">10</div><div><div class="h">What broke</div><div class="b">One line naming where the manual process was slowest, hardest or wrong. That is the first thing you automate, and the first thing you defend at Demo Day.</div></div></li>
+  </ol>
+  <div class="callout"><div class="t">Where to submit</div>
+    <p>Upload the folder here before Monday 10:00 PM: <span class="ph">[SUBMISSION LINK: form or shared Drive folder]</span>. Name the folder <span class="mono">TeamName_FirstAction</span>. One submission per team; the latest upload before the deadline is the one read.</p>
+  </div>
+</div></section>
+
+<section id="clock"><div class="wrap">
+  <h2><span class="num">04</span>The clock</h2>
+  <ul class="tl">
+    <li><div class="when">SAT 12 SEP · 10:00 PM</div><div class="what">Kickoff. Rubric is final from here.</div></li>
+    <li><div class="when">SAT NIGHT</div><div class="what">Send your first messages to users tonight. Monday is a working day for them.</div></li>
+    <li><div class="when">SUN 13 SEP · 10:00 PM</div><div class="what">Midpoint check. Post one word in <span class="ph">[DISCORD CHANNEL]</span> with one line of detail.</div>
+      <div class="states">
+        <div class="state g"><b>Green</b>Both users named and contacted.</div>
+        <div class="state s"><b>Stuck</b>Name the block in one line.</div>
+        <div class="state x"><b>Silent</b>No post. Recorded.</div>
+      </div></li>
+    <li><div class="when">MON 14 SEP · 10:00 PM</div><div class="what">Submission closes. Nothing after this is read.</div></li>
+    <li><div class="when">TUE 15 SEP</div><div class="what">Completeness check in the morning, results on Discord by evening.</div></li>
+  </ul>
+</div></section>
+
+<section id="start"><div class="wrap">
+  <h2><span class="num">05</span>How to start in the next hour</h2>
+  <ol>
+    <li><strong>Reread your brief's Observation once,</strong> then close it. Write artefact 1 in your own words before you write anything else.</li>
+    <li><strong>List ten people</strong> who match your brief's user. Not "operations people". Names, or at least a place where those names live: a Discord server, a WhatsApp group, a LinkedIn search, a family member's colleague.</li>
+    <li><strong>Send the first message tonight,</strong> in your own words. Screenshot the send. That is artefact 5 starting.</li>
+    <li><strong>Split the team.</strong> One person owns the users, one owns the manual run, one owns the folder. Every member must appear in at least one contact artefact or interview.</li>
+    <li><strong>Do not open a code editor.</strong> Open a doc. If you have used the discovery-to-mvp-coach skill before, it will get you through artefacts 1 to 3 quickly. The skill is allowed. The skill's output is not the submission; the users are.</li>
+  </ol>
+</div></section>
+
+<section id="briefs"><div class="wrap">
+  <h2><span class="num">06</span>Your first action, by brief</h2>
+  <p>Every brief has the same shape this weekend: one user type, one manual output, one number. Custom capstones follow the same ten artefacts with the user and metric from your own validated brief.</p>
+  <div class="cards">
+    <div class="card"><h4>Genome Intelligence</h4>
+      <div class="row"><div class="k">Users</div><div class="v">Two people who have a raw genotype file (23andMe, AncestryDNA or similar) and are willing to share it with you privately.</div></div>
+      <div class="row"><div class="k">Manual run</div><div class="v">Pick 3 to 5 variants in one domain by hand. For each, write one card: what supports it, what disputes it, how old the evidence is, which population it was measured in. Hand over the cards, not a report.</div></div>
+      <div class="row"><div class="k">Number</div><div class="v">How many of your findings the user challenged or rejected after reading the evidence. That share is your signal.</div></div></div>
+    <div class="card"><h4>Creator OS</h4>
+      <div class="row"><div class="k">Users</div><div class="v">Two creators or small content teams with at least 20 published pieces you can read.</div></div>
+      <div class="row"><div class="k">Manual run</div><div class="v">Take one piece of raw material from them (a recording, a call, a voice note). Draft one publishable output for a channel they use. Before handing it over, check every claim against the source and against their archive yourself, and mark what you checked.</div></div>
+      <div class="row"><div class="k">Number</div><div class="v">Minutes they spent rewriting before they would publish it, and whether it was accepted, fixed, or abandoned.</div></div></div>
+    <div class="card"><h4>Collaborative Intelligence</h4>
+      <div class="row"><div class="k">Users</div><div class="v">Two people outside your team who do one repeated task often enough to see it several times this weekend.</div></div>
+      <div class="row"><div class="k">Manual run</div><div class="v">Watch them do the task twice and write down what they contribute that a prompt could not. Then do the task yourself with a plain model prompt, no system. Record both results side by side. That is arms one and two of your three-arm comparison, before any build.</div></div>
+      <div class="row"><div class="k">Number</div><div class="v">Time and quality per run for the person alone and for the bare model. Your pair has to beat both later.</div></div></div>
+    <div class="card"><h4>Learning OS</h4>
+      <div class="row"><div class="k">Users</div><div class="v">Two learners outside your team who can run SQL against the given schema.</div></div>
+      <div class="row"><div class="k">Manual run</div><div class="v">Give each a plain English question. Coach them over chat by hand, giving hints and never the answer, until their result set is correct. The next day, give a held-out question with no help. Record whether the result set was correct.</div></div>
+      <div class="row"><div class="k">Number</div><div class="v">Unaided correctness on the held-out question. Also record the exact hints you gave: that log is your policy about how much to give.</div></div></div>
+    <div class="card"><h4>Verified Persuasion</h4>
+      <div class="row"><div class="k">Users</div><div class="v">Two people who each hold one belief that costs them money, time or health, can say why they hold it, and consent to the conversation. Political and identity beliefs are out.</div></div>
+      <div class="row"><div class="k">Manual run</div><div class="v">Ask why they hold it. Write five claims that answer their reason, each traceable to a source you name. Talk them through it. Rate the belief 0 to 10 before and after.</div></div>
+      <div class="row"><div class="k">Number</div><div class="v">Belief shift, and a count of claims you made that you could not source. That second number should be zero.</div></div></div>
+    <div class="card"><h4>Custom capstone</h4>
+      <div class="row"><div class="k">Users</div><div class="v">The user your validated brief names. If your brief could not name one, this weekend is when you find out.</div></div>
+      <div class="row"><div class="k">Manual run</div><div class="v">One input from a real user, one output produced by you, delivered to them.</div></div>
+      <div class="row"><div class="k">Number</div><div class="v">The impact metric from your brief, measured once by hand.</div></div></div>
+  </div>
+</div></section>
+
+<section id="judging"><div class="wrap">
+  <h2><span class="num">07</span>How it is judged</h2>
+  <h3>Stage 1: complete or not</h3>
+  <p>The 100x Program team checks every folder for the ten artefacts. Present or absent, no judgment. Incomplete folders stop here.</p>
+  <h3>Stage 2: four criteria, read by Siddhant</h3>
+  <p>Each criterion scores 0, 1 or 2. The criteria are written so two people reading the same folder would agree.</p>
+  <table>
+    <tr><th>Criterion</th><th>2 points</th><th>0 points</th></tr>
+    <tr><td>Specificity</td><td>Users are named people. The metric has a digit and a unit. The bottleneck in artefact 10 is one step.</td><td>"The sales team", "saves time", "it is slow".</td></tr>
+    <tr><td>Reality</td><td>Contact artefacts are real and timestamped. The manual output was produced from input the user actually gave.</td><td>Invented input, or notes with no evidence of contact.</td></tr>
+    <tr><td>Reaction quality</td><td>Each user said something specific enough to change your design.</td><td>"Looks good", "interesting", or paraphrased by the team.</td></tr>
+    <tr><td>Process honesty</td><td>The D/P/H map matches what actually happened and names where it failed.</td><td>A map of what you plan to build, or a map with no failure named.</td></tr>
+  </table>
+  <p><strong>Tie break:</strong> the team whose first contact artefact carries the earliest timestamp after kickoff.</p>
+  <div class="callout"><div class="t">Complexity is not credit</div>
+    <p>Nothing in the rubric rewards tools used, models called, or components planned. Two real people, one honest manual run and a process map you can defend beat any amount of architecture.</p>
+  </div>
+</div></section>
+
+<section id="prizes"><div class="wrap">
+  <h2><span class="num">08</span>What you get</h2>
+  <div class="prize"><h3>Top 3 teams</h3>
+    <ul>
+      <li><strong>A detailed 1:1 session with Siddhant</strong> on your capstone, with personalised feedback on your process, your system design and what to build first.</li>
+      <li><strong>GTM and hiring assistance</strong> from the 100x team through to Demo Day and beyond.</li>
+      <li><strong>Warm intros and a personalised recommendation</strong> from Siddhant to people relevant to your problem and your career.</li>
+      <li><strong>Your story told and boosted:</strong> your work reposted from the 100xEngineers and Siddhant's LinkedIn accounts, and featured in 100x content.</li>
+    </ul>
+  </div>
+  <h3>Every team that completes</h3>
+  <ul>
+    <li>Your team named at Demo Day as a First Action finisher.</li>
+    <li>Priority in the capstone pitch-review sessions between now and 7 October.</li>
+    <li>A head start no other team has: two real users, a measured baseline, and a process map on Tuesday morning with three and a half weeks left to build.</li>
+  </ul>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2><span class="num">09</span>FAQ</h2>
+  <h3>About the hackathon</h3>
+  <details><summary>Can we build anything at all this weekend?</summary><p>For yourselves, yes. Use any model, skill or script to prepare, draft, check or analyse. For the user, no. They receive something you made by hand from their input. The point is to learn the process, and a system hides the process.</p></details>
+  <details><summary>Our two users are hard to reach by Monday. What counts?</summary><p>Any real person who matches your brief's user and gives you real input. A 20 minute chat conversation counts. A phone call followed by a message you can screenshot counts. A persona or your own team member does not, and the folder is incomplete. A classmate from another team, a friend or a relative counts if they genuinely match your brief’s user.</p></details>
+  <details><summary>Do we need a call recording?</summary><p>No. A chat or email screenshot with a visible timestamp is enough. Blur or crop anything sensitive before uploading.</p></details>
+  <details><summary>We are stuck on Sunday night. Does that hurt us?</summary><p>Posting <b>Stuck</b> with one line of detail is a legitimate on-time state and costs nothing. Posting nothing is the only thing recorded against you.</p></details>
+  <details><summary>Our manual run went badly. The user did not find it useful.</summary><p>Submit it exactly as it happened. Artefact 8 asks for their words and artefact 10 asks where it broke. A failed manual run with an honest map scores higher than a flattering one with no failure named. This is the same rule as your capstone: a negative result reported beats a comparison never run.</p></details>
+  <details><summary>Can we change our capstone hypothesis based on what we learn?</summary><p>You are expected to. Keep the version you wrote at kickoff and the version you wrote on Monday. The difference is the finding.</p></details>
+  <details><summary>How long should each artefact be?</summary><p>As short as it can be while still checkable. The observation is one paragraph. The reaction is one sentence per user. The process map is a numbered list with a letter next to each step. If your folder takes longer than ten minutes to read, it is too long.</p></details>
+  <details><summary>Who is judging, and when will we hear?</summary><p>The 100x Program team checks completeness on Tuesday morning. Siddhant reads every complete folder. Results are announced Tuesday evening in the <span class="ph">[DISCORD ANNOUNCEMENT CHANNEL]</span>.</p></details>
+  <details><summary>Does this replace any capstone deliverable?</summary><p>No. It is the first three days of your capstone done properly. Your capstone deadline stays 7 October and Demo Day stays 11 October. Everything in your folder feeds directly into the Observation, Hypothesis, baseline and process sections of your final submission.</p></details>
+
+  <h3>About the capstone briefs</h3>
+  <details><summary>The brief never tells me what to build. Where do I start?</summary><p>From the measurement. Ask what evidence would prove the hypothesis wrong, design the test that produces it, then build the smallest thing that lets you run it. This weekend is that test run by hand.</p></details>
+  <details><summary>Can I be my own user, or use someone on my team?</summary><p>No, and the exclusion is load-bearing. You already know what the system is for, so you cannot produce the misunderstandings that count as evidence. Anyone outside your team is fair game, including classmates, friends and family, as long as they genuinely match your brief’s user.</p></details>
+  <details><summary>How big should the final system be?</summary><p>As small as you can defend. Three findings you can defend beat fifty you cannot. Choosing not to use a technique, and defending the choice, counts as a decision.</p></details>
+  <details><summary>What does an end to end slice mean at Demo Day?</summary><p>One complete path from real input to real output, run by someone not on your team, including what happens when things fail. Your manual run this weekend is that slice with a human in place of every component.</p></details>
+  <details><summary>Which parts of a brief are negotiable?</summary><p>Anything about how: models, agent count, retrieval, memory, interface. Nothing about who or whether: the real user, the honest measurement, consent, the safety lines. If you cannot recruit, switch briefs early rather than substituting a persona.</p></details>
+  <details><summary>Where are the full briefs?</summary><p>
+    <a href="https://docs.google.com/document/d/14ChX56OWlTsGjrxGqVQBgdYQkpf1Pt9fKz_Hrd2Wah8/edit?usp=sharing">Genome Intelligence</a> ·
+    <a href="https://docs.google.com/document/d/1vLrhPG_eJpt2lf5ZMf08BCwpQyZn1pjozaaS7ex3xjI/edit?usp=sharing">Creator OS</a> ·
+    <a href="https://docs.google.com/document/d/1F37vZlQMUF5WA36w4NG-7KkZB3R6VnnjbtIueDWNVew/edit?usp=sharing">Collaborative Intelligence</a> ·
+    <a href="https://docs.google.com/document/d/1PsfmN3ip6Hj7nwFNO-vbK27Bpk5506-6JgsHUxnqA3w/edit?usp=sharing">Learning OS</a> ·
+    <a href="https://docs.google.com/document/d/1xEIye9INqWSDLQjhzw1DjUjV1ZMOqz9RCujH_w35lI0/edit?usp=sharing">Verified Persuasion</a> ·
+    <a href="https://docs.google.com/document/d/16SIqITTCK4QzeJbUjJWKeS3n1wQWM6h8mPLMDyrgCsw/edit?tab=t.0">Capstone FAQ</a></p></details>
+
+  <div class="callout" style="margin-top:32px"><div class="t">The whole brief in one line</div>
+    <p>Find two real people. Do their work for them once, by hand. Write down exactly how you did it and where it hurt. Upload by Monday 10 PM.</p>
+    <a class="btn" href="#submit">Submit your folder</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">100xEngineers · C7 Capstone · First Action Hackathon · 12 to 14 September 2026 · Questions: <span class="ph">[DISCORD SUPPORT CHANNEL]</span></div></footer>
+
+</body>
+</html>
